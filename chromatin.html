@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chromatin State Prediction — Cherry Ni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+<div class="nav-logo"><a href="index.html" style="color:inherit;text-decoration:none;">CN</a></div>
+<ul class="nav-links">
+<li><a href="index.html#about">About</a></li>
+<li><a href="index.html#projects">Projects</a></li>
+<li><a href="index.html#contact">Contact</a></li>
+</ul>
+</nav>
+
+<!-- PROJECT HERO -->
+<section class="hero">
+<div class="hero-content">
+<p class="hero-eyebrow">Project 01</p>
+<h1 class="hero-name">Chromatin State Prediction</h1>
+<p class="hero-tagline">A 1D convolutional neural network for classifying DNA sequences into chromatin states</p>
+<a href="CBS_Hackathon_Presentation.pptx" class="btn" download>Download Slide Deck</a>
+</div>
+<div class="hero-decoration" aria-hidden="true"></div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="about" id="overview">
+<div class="container">
+<span class="section-label">Overview</span>
+<div class="about-grid">
+<div class="about-text">
+<h2>Why a CNN?</h2>
+<p>
+DNA regulation depends heavily on sequence motifs — short, recurring patterns that
+influence how a region of the genome behaves. CNNs are a natural fit for this: they
+detect motifs automatically regardless of where they fall in a sequence, and reuse
+the same learned filters across the entire input.
+</p>
+<p>
+For this hackathon project, I trained a 1D CNN to classify 200bp DNA sequences into
+their corresponding chromatin states.
+</p>
+</div>
+<div class="skills-list">
+<h3>Built With</h3>
+<ul>
+<li>Python</li>
+<li>TensorFlow / Keras</li>
+<li>One-hot Encoding</li>
+<li>Convolutional Neural Networks</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<!-- DATA REPRESENTATION -->
+<section class="projects" id="data">
+<div class="container">
+<span class="section-label">Data</span>
+<h2>Data Representation</h2>
+<p>
+Each DNA sequence was one-hot encoded, mapping every nucleotide to a 4-channel vector
+so the model could process the sequence numerically.
+</p>
+<table style="margin: 1.5rem 0; border-collapse: collapse; width: 100%; max-width: 320px;">
+<caption style="text-align:left; margin-bottom: 0.5rem; font-weight: 500;">One-hot encoding scheme</caption>
+<thead>
+<tr>
+<th scope="col" style="text-align:left; padding: 0.4rem 1rem; border-bottom: 1px solid currentColor;">Base</th>
+<th scope="col" style="text-align:left; padding: 0.4rem 1rem; border-bottom: 1px solid currentColor;">Encoding</th>
+</tr>
+</thead>
+<tbody>
+<tr><td style="padding: 0.4rem 1rem;">A</td><td style="padding: 0.4rem 1rem;">[1, 0, 0, 0]</td></tr>
+<tr><td style="padding: 0.4rem 1rem;">C</td><td style="padding: 0.4rem 1rem;">[0, 1, 0, 0]</td></tr>
+<tr><td style="padding: 0.4rem 1rem;">G</td><td style="padding: 0.4rem 1rem;">[0, 0, 1, 0]</td></tr>
+<tr><td style="padding: 0.4rem 1rem;">T</td><td style="padding: 0.4rem 1rem;">[0, 0, 0, 1]</td></tr>
+</tbody>
+</table>
+<p>The dataset was split 80/20 — 80% for training, 20% for validation.</p>
+</div>
+</section>
+
+<!-- MODEL ARCHITECTURE -->
+<section class="about" id="architecture">
+<div class="container">
+<span class="section-label">Architecture</span>
+<div class="about-grid">
+<div class="about-text">
+<h2>Model Architecture</h2>
+<p>
+The network used 4 convolutional layers with kernel sizes of 30, 15, 7, and 3.
+Large early kernels capture broader motifs, while smaller kernels pick up more
+specific patterns as the network goes deeper. Filter counts increased from 64 to 512
+across the layers.
+</p>
+</div>
+<div class="skills-list">
+<h3>Key Techniques</h3>
+<ul>
+<li>Dilated convolutions for long-range dependencies</li>
+<li>Global average pooling to reduce overfitting</li>
+<li>Label smoothing for noisy labels</li>
+<li>AdamW optimizer + dropout</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<!-- AUGMENTATION -->
+<section class="projects" id="augmentation">
+<div class="container">
+<span class="section-label">Augmentation</span>
+<h2>Reverse Complement Augmentation</h2>
+<p>
+DNA is double-stranded, and motifs can appear on either strand. To account for this,
+I trained the model on each sequence alongside its reverse complement — effectively
+doubling the dataset size and improving generalization.
+</p>
+</div>
+</section>
+
+<!-- RESULTS -->
+<section class="about" id="results">
+<div class="container">
+<span class="section-label">Results</span>
+<div class="about-text">
+<h2>Results &amp; Takeaways</h2>
+<p>
+The model reached a top validation accuracy of 19.5% on this multi-class chromatin
+state classification task — a solid baseline for a hackathon timeframe, and a clear
+signal for where the next iteration should focus: more training data, deeper motif
+architectures, and further tuning of the augmentation strategy.
+</p>
+</div>
+</div>
+</section>
+
+<!-- CONTACT / BACK -->
+<section class="contact" id="contact">
+<div class="container">
+<span class="section-label">Contact</span>
+<h2>Let's work together.</h2>
+<p>Whether you have a project in mind or just want to say hi — my inbox is always open.</p>
+<a href="mailto:cherryni@g.ucla.edu" class="btn btn-outline">Say Hello</a>
+<div class="social-links">
+<a href="https://github.com/cherrynii" target="_blank">GitHub</a>
+<a href="https://www.linkedin.com/in/cherry-ni-07588b32b/" target="_blank">LinkedIn</a>
+<a href="https://www.instagram.com/cherryini/" target="_blank">Instagram</a>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<p>Designed &amp; Built by <strong>Cherry Ni</strong> · <span id="year"></span></p>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
