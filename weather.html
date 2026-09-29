@@ -19,12 +19,18 @@
     </div>
  
     <div class="search-row">
-      <input
-        type="text"
-        id="cityInput"
-        placeholder="Enter a city name..."
-        autocomplete="off"
-      />
+      <div class="input-group">
+        <input
+          type="text"
+          id="cityInput"
+          placeholder="Enter a city name..."
+          autocomplete="off"
+          aria-autocomplete="list"
+          aria-controls="suggestions"
+          aria-expanded="false"
+        />
+        <div id="suggestions" class="suggestions" role="listbox" aria-label="City suggestions"></div>
+      </div>
       <button id="searchBtn" onclick="getWeather()">Search</button>
     </div>
  
@@ -85,14 +91,169 @@
       Clouds:       '☁️',
     };
  
-    // Allow pressing Enter to search
-    document.getElementById('cityInput').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') getWeather();
+    // Allow pressing Enter to search (and handle suggestion navigation)
+    const cityInputEl = document.getElementById('cityInput');
+    const suggestionsEl = document.getElementById('suggestions');
+
+    cityInputEl.addEventListener('keydown', (e) => {
+      const active = suggestionsEl.querySelector('.suggestion-item.active');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        moveHighlight(1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        moveHighlight(-1);
+      } else if (e.key === 'Enter') {
+        if (active) {
+          e.preventDefault();
+          selectCity(active.textContent);
+        } else {
+          getWeather();
+        }
+      } else if (e.key === 'Escape') {
+        clearSuggestions();
+      }
     });
+
+    // Use OpenWeather Geocoding API for full-city suggestions (debounced + cached)
+    const geoCache = new Map();
+    let geoTimer = null;
+
+    async function fetchGeoSuggestions(q) {
+      if (geoCache.has(q)) return geoCache.get(q);
+      const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(q)}&limit=8&appid=${API_KEY}`;
+      const res = await fetch(url);
+      if (!res.ok) return [];
+      const data = await res.json();
+      // data is array of { name, local_names?, lat, lon, country, state? }
+      geoCache.set(q, data);
+      return data;
+    }
+
+    cityInputEl.addEventListener('input', () => {
+      const q = cityInputEl.value.trim();
+      clearTimeout(geoTimer);
+      if (!q) return clearSuggestions();
+      geoTimer = setTimeout(async () => {
+        try {
+          const results = await fetchGeoSuggestions(q);
+          renderSuggestions(results, q);
+        } catch (err) {
+          console.error('Geo suggestions error', err);
+          clearSuggestions();
+        }
+      }, 300);
+    });
+
+    // Click selection via delegation (items include lat/lon)
+    suggestionsEl.addEventListener('click', (e) => {
+      const item = e.target.closest('.suggestion-item');
+      if (item) {
+        const lat = item.dataset.lat;
+        const lon = item.dataset.lon;
+        const label = item.textContent;
+        if (lat && lon) selectCity({ label, lat: parseFloat(lat), lon: parseFloat(lon) });
+        else selectCity(label);
+      }
+    });
+
+    cityInputEl.addEventListener('blur', () => setTimeout(clearSuggestions, 180));
+
+    function renderSuggestions(list, q) {
+      if (!list || !list.length) return clearSuggestions();
+
+      const seen = new Set();
+      const qLower = (q || '').toLowerCase();
+
+      // Stronger matching: prefer API `name` field for display and require
+      // at least one name part to start with the typed query (word-prefix match).
+      const sanitized = list.map(it => {
+        const baseName = (it.name || '').trim();
+        const label = `${baseName}${it.state ? ', ' + it.state : ''}, ${it.country}`.trim();
+        return { label, baseName, lat: it.lat, lon: it.lon };
+      })
+      .filter(it => {
+        if (!it.baseName) return false;
+        const nameLower = it.baseName.toLowerCase();
+        // split into words/parts and require at least one part starts with query
+        const parts = nameLower.split(/[^a-zA-Z0-9]+/).filter(Boolean);
+        if (!parts.length) return false;
+        if (!qLower) return false;
+        const matchesPrefix = parts.some(p => p.startsWith(qLower));
+        return matchesPrefix;
+      })
+      .filter(it => {
+        if (seen.has(it.label)) return false;
+        seen.add(it.label);
+        return true;
+      });
+
+      if (!sanitized.length) return clearSuggestions();
+
+      suggestionsEl.innerHTML = sanitized.map((it, i) => {
+        const latAttr = it.lat != null ? `data-lat="${it.lat}"` : '';
+        const lonAttr = it.lon != null ? `data-lon="${it.lon}"` : '';
+        return `<div role="option" class="suggestion-item" data-index="${i}" ${latAttr} ${lonAttr}>${escapeHtml(it.label)}</div>`;
+      }).join('');
+      suggestionsEl.style.display = 'block';
+      cityInputEl.setAttribute('aria-expanded', 'true');
+      highlightIndex(-1);
+    }
+
+    function clearSuggestions() {
+      suggestionsEl.innerHTML = '';
+      suggestionsEl.style.display = 'none';
+      cityInputEl.setAttribute('aria-expanded', 'false');
+    }
+
+    // selectCity can accept an object with lat/lon or a plain name
+    function selectCity(item) {
+      if (typeof item === 'object' && item.lat != null && item.lon != null) {
+        cityInputEl.value = item.label;
+        clearSuggestions();
+        getWeather(item.lat, item.lon);
+      } else {
+        cityInputEl.value = item;
+        clearSuggestions();
+        getWeather();
+      }
+    }
+
+    function moveHighlight(delta) {
+      const items = Array.from(suggestionsEl.querySelectorAll('.suggestion-item'));
+      if (!items.length) return;
+      let idx = items.findIndex(i => i.classList.contains('active'));
+      idx = Math.min(items.length - 1, Math.max(-1, idx + delta));
+      highlightIndex(idx);
+      if (idx >= 0) items[idx].scrollIntoView({ block: 'nearest' });
+    }
+
+    function highlightIndex(idx) {
+      const items = Array.from(suggestionsEl.querySelectorAll('.suggestion-item'));
+      items.forEach((it, i) => it.classList.toggle('active', i === idx));
+      if (idx >= 0) {
+        const id = `suggestion-${idx}`;
+        items[idx].id = id;
+        cityInputEl.setAttribute('aria-activedescendant', id);
+      } else {
+        cityInputEl.removeAttribute('aria-activedescendant');
+      }
+    }
+
+    // Simple escaping to avoid XSS if city names change
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'' : '&#39;'}[c]));
+    }
  
-    async function getWeather() {
-      const city = document.getElementById('cityInput').value.trim();
-      if (!city) return;
+    async function getWeather(lat, lon) {
+      let url;
+      if (lat != null && lon != null) {
+        url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=imperial`;
+      } else {
+        const city = document.getElementById('cityInput').value.trim();
+        if (!city) return;
+        url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=imperial`;
+      }
  
       // Reset UI
       setError('');
@@ -101,7 +262,6 @@
       document.getElementById('searchBtn').disabled = true;
  
       try {
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=imperial`;
         const res = await fetch(url);
         const data = await res.json();
  
