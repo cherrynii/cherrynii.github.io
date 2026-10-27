@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Experience — Cherry Ni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+<!-- NAVIGATION -->
+<nav>
+<div class="nav-logo"><a href="index.html" style="color:inherit;text-decoration:none;">CN</a></div>
+<ul class="nav-links">
+<li><a href="index.html#about">About</a></li>
+<li><a href="experience.html">Experience</a></li>
+<li><a href="index.html#projects">Projects</a></li>
+<li><a href="index.html#contact">Contact</a></li>
+</ul>
+</nav>
+
+<!-- EXPERIENCE HERO -->
+<section class="hero">
+<div class="hero-content">
+<p class="hero-eyebrow">Experience</p>
+<h1 class="hero-name">Where I've Worked</h1>
+<p class="hero-tagline">Web accessibility and IT support across UCLA departments</p>
+</div>
+<div class="hero-decoration" aria-hidden="true"></div>
+</section>
+
+<!-- UCLA LIFE SCIENCE COMPUTING -->
+<section class="about" id="lsc">
+<div class="container">
+<span class="section-label">UCLA Life Science Computing</span>
+<div class="about-grid">
+<div class="about-text">
+<h2>Web Accessibility</h2>
+<p>
+I'm currently working with UCLA's Life Science Computing to improve accessibility of
+departmental websites so that they meet WCAG 2.1 AA accessibility guidelines. So far,
+I have resolved 50+ support tickets covering issues related to accessibility, mobile
+responsiveness, and content updates on 10+ WordPress sites.
+</p>
+<p>
+When I'm not resolving support tickets, I use lsc-axe-core to diagnose and fix
+accessibility issues. My workflow involves making pull requests with Git across the
+ucla-child-ls, ucla-plugin-plugin-ext, and ucla-tec-templates codebases. Some fixes
+include updating text opacity in ucla-child-ls theme files to resolve color contrast
+violations and refactoring HTML header elements in PHP code to ensure a semantic
+structure. I also develop custom JavaScript snippets on WordPress sites to remediate
+issues with semantic HTML structure (heading levels, landmark roles), ARIA labels,
+navigation roles, and DOM clean-up.
+</p>
+<p>
+So far, on <a href="https://ceils.ucla.edu/" target="_blank">CEILS</a>, I've improved
+accessibility scores from 70% to 95%+ as measured by the
+<a href="https://github.com/trandrew/lsc-axe-core" target="_blank">lsc-axe-core</a>
+scanner. Currently, I'm leading accessibility remediations for the
+<a href="https://www.botgard.ucla.edu/" target="_blank">Mildred E. Mathias Botanical Garden</a>
+site.
+</p>
+</div>
+<div class="skills-list">
+<h3>Other Sites I've Worked On</h3>
+<ul>
+<li><a href="https://admin.lifesci.ucla.edu/" target="_blank">Life Sciences Administration</a></li>
+<li><a href="https://qcb.ucla.edu/" target="_blank">Institute for Quantitative and Computational Biosciences</a></li>
+<li><a href="https://reprohealth.ucla.edu/" target="_blank">Center for Reproductive Science, Health, &amp; Education</a></li>
+<li><a href="https://developingadolescent.ucla.edu/" target="_blank">Center for the Developing Adolescent</a></li>
+<li><a href="https://cirtl.ceils.ucla.edu/" target="_blank">Center for the Integration of Research, Teaching, and Learning</a></li>
+<li><a href="https://barberlab.eeb.ucla.edu/" target="_blank">Barber Lab</a></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<!-- UCLA INTERNATIONAL INSTITUTE -->
+<section class="projects" id="international-institute">
+<div class="container">
+<span class="section-label">UCLA International Institute</span>
+<h2>Student IT Support</h2>
+<p>
+At the UCLA International Institute, I work in a student IT support role where I track
+and maintain department equipment inventory using Webtools and Excel. Additionally, I
+provide technical support to staff and academic centers by troubleshooting technical
+issues, answering inquiries, and managing equipment loans. My responsibilities also
+include creating new user accounts, scheduling Zoom webinars, and staging equipment for
+delivery and deployment.
+</p>
+</div>
+</section>
+
+<!-- CONTACT / BACK -->
+<section class="contact" id="contact">
+<div class="container">
+<span class="section-label">Contact</span>
+<h2>Let's work together.</h2>
+<p>Whether you have a project in mind or just want to say hi — my inbox is always open.</p>
+<a href="mailto:cherryni@g.ucla.edu" class="btn btn-outline">Say Hello</a>
+<div class="social-links">
+<a href="https://github.com/cherrynii" target="_blank">GitHub</a>
+<a href="https://www.linkedin.com/in/cherry-ni-07588b32b/" target="_blank">LinkedIn</a>
+<a href="https://www.instagram.com/cherryini/" target="_blank">Instagram</a>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<p>Designed &amp; Built by <strong>Cherry Ni</strong> · <span id="year"></span></p>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
