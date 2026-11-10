@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About — Cherry Ni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Gelasio:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="water.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- WATER BACKGROUND -->
+    <div class="water" aria-hidden="true"></div>
+    <div class="water-stars" aria-hidden="true">
+      <span class="star star--sparkle" style="left: 70px; top: 380px; width: 46px;"></span>
+      <span class="star star--sparkle" style="left: 160px; top: 620px; width: 38px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 225px); top: 300px; width: 50px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 120px); top: 370px; width: 40px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 420px); top: 395px; width: 58px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 130px); top: 600px; width: 42px;"></span>
+      <span class="glint" style="left: 125px; top: 365px; width: 16px;"></span>
+      <span class="glint" style="left: 45px; top: 560px; width: 12px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 290px); top: 285px; width: 18px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 95px); top: 440px; width: 12px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 395px); top: 470px; width: 16px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 190px); top: 650px; width: 14px;"></span>
+    </div>
+    <svg class="water-defs" aria-hidden="true" focusable="false">
+      <filter id="water-ripple" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.014" numOctaves="2" seed="7" result="noise">
+          <animate attributeName="baseFrequency" dur="14s" values="0.006 0.014;0.009 0.021;0.006 0.014" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="70" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" aria-label="Main">
+      <a href="index.html" class="sidebar-logo" aria-label="Cherry Ni, home">
+        <span class="star star--teal" style="left: 20px; top: 0; width: 30px;"></span>
+        <span class="star star--pink" style="left: 0; top: 26px; width: 40px;"></span>
+        <span class="star star--blue" style="left: 45px; top: 21px; width: 34px;"></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">home</a></li>
+        <li><a href="experience.html">experience</a></li>
+        <li><a href="projects.html">projects</a></li>
+        <li><a href="about.html" aria-current="page">about</a></li>
+      </ul>
+      <a href="resume.pdf" class="btn-resume" target="_blank">resume</a>
+    </nav>
+
+    <!-- ABOUT -->
+    <main id="main" class="page">
+      <h1 class="section-title">About.</h1>
+      <p>
+        Hi! I’m Cherry Ni, a CS student at UCLA. I’m passionate about web design and turning
+        ideas into working products. I love being creative, whether it’s creating collages on
+        Pinterest or designing posters on Canva.
+      </p>
+      <p>
+        I specialize in crafting accessible user interfaces using platforms such as WordPress
+        and modern web tools. I thrive at the intersection of design and engineering, where
+        great user experience meets clean, scalable code.
+      </p>
+      <p>
+        I’m currently learning software development and machine learning. I initially began my
+        journey at UCLA studying chemical engineering, but after learning Python for the first
+        time in a physics lab, I became fascinated with coding. Seeing abstract mathematical
+        concepts transform into clean visual graphs scratched an itch in my brain, and I
+        discovered a deep satisfaction in breaking down complex problems into logical,
+        executable blocks of code.
+      </p>
+      <p>
+        I’m always looking for ways to grow as a developer and build tools that make the web
+        more inclusive. Outside of coding, you can find me trying out new recipes, watching rom-coms, or exploring new cafes.
+      </p>
+      <p>
+        Want to say hi? My inbox is always open at
+        <a href="mailto:cherryni@g.ucla.edu">cherryni@g.ucla.edu</a>.
+      </p>
+      <ul class="social-links">
+        <li><a href="https://github.com/cherrynii" target="_blank">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/cherry-ni-07588b32b/" target="_blank">LinkedIn</a></li>
+        <li><a href="https://www.instagram.com/cherryini/" target="_blank">Instagram</a></li>
+      </ul>
+    </main>
+
+    <!-- DECORATION -->
+    <div class="decor" aria-hidden="true">
+      <span class="star star--teal" style="left: 140px; top: 128px; width: 56px; --tilt: -8deg;"></span>
+      <span class="star star--pink" style="left: 110px; top: 208px; width: 66px; --tilt: -12deg;"></span>
+      <span class="star star--blue" style="left: 187px; top: 197px; width: 62px; --tilt: 10deg;"></span>
+      <figure class="photo" style="left: 170px; top: 425px; width: 215px; height: 290px; transform: rotate(8deg);">
+        <!-- <img src="images/about.jpg" alt="" /> -->
+      </figure>
+    </div>
+  </body>
+</html>

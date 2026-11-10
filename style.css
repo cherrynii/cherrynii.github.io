@@ -1,23 +1,28 @@
 /* =========================================
-   PORTFOLIO STARTER — style.css
+   PORTFOLIO — style.css
    ========================================= */
 
 /* --- CSS Variables (your design tokens) --- */
 :root {
-  --color-bg:       #0f0f0f;
-  --color-surface:  #1a1a1a;
-  --color-border:   #2a2a2a;
-  --color-text:     #faecf9;
-  --color-muted:    #c5afaf;
-  --color-accent:   #da98c0;       /* warm gold */
-  --color-accent2:  #e9c8e1;
+  --color-page:     #fffbf4;
+  --color-text:     #333333;
+  --color-muted:    #4a4a4a;
+  --color-border:   #6b6b6b;
+  --color-accent:   #44a6d0;
+  --color-water:    #d9f0ff;
 
-  --font-display:  'Playfair Display', Georgia, serif;
-  --font-body:     'DM Sans', sans-serif;
+  /* holographic star gradients */
+  --holo-pink:  linear-gradient(135deg, #ff9fd2 0%, #ffd9a8 55%, #b8f1e4 100%);
+  --holo-teal:  linear-gradient(135deg, #6fd3d6 0%, #a4ecc9 60%, #c9f3e2 100%);
+  --holo-blue:  linear-gradient(135deg, #6fe3f2 0%, #8db3ff 55%, #c19dff 100%);
 
-  --radius:  8px;
-  --max-w:   1100px;
-  --gap:     2rem;
+  --font-display:  'Alex Brush', Georgia, serif;
+  --font-nav:      'Gelasio', Georgia, serif;
+  --font-body:     'Gelasio', 'Helvetica Neue', sans-serif;
+
+  --sidebar-w:  188px;
+  --page-w:     725px;
+  --right:      calc(var(--sidebar-w) + var(--page-w) + 60px);
 }
 
 /* --- Reset --- */
@@ -32,17 +37,18 @@ html {
 }
 
 body {
-  background-color: var(--color-bg);
+  min-height: 100vh;
   color: var(--color-text);
   font-family: var(--font-body);
   font-weight: 300;
-  line-height: 1.7;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  word-spacing: 5;
+  line-height: 1.65;
+  background: var(--color-water);
 }
 
 a {
   color: inherit;
-  text-decoration: none;
 }
 
 ul {
@@ -54,361 +60,509 @@ img {
   display: block;
 }
 
-/* --- Utility --- */
-.container {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 2rem;
+:focus-visible {
+  outline: 2px solid #5a8fd8;
+  outline-offset: 3px;
 }
 
-.section-label {
-  display: inline-block;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-  font-weight: 500;
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 200;
+  padding: 0.5rem 1rem;
+  background: var(--color-page);
+  border: 1px solid var(--color-border);
 }
 
-/* --- Buttons --- */
-.btn {
-  display: inline-block;
-  padding: 0.85rem 2rem;
-  background: var(--color-accent);
-  color: #0f0f0f;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  border-radius: var(--radius);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  cursor: pointer;
-  border: none;
-}
-
-.btn:hover {
-  opacity: 0.85;
-  transform: translateY(-2px);
-}
-
-.btn-outline {
-  background: transparent;
-  color: var(--color-accent);
-  border: 1px solid var(--color-accent);
-}
-
-.btn-outline:hover {
-  background: var(--color-accent);
-  color: #0f0f0f;
-  opacity: 1;
+.skip-link:focus {
+  top: 1rem;
 }
 
 /* =========================================
-   NAVIGATION
+   WATER BACKGROUND
+   Fabric-like gradients + sparkles, rippled by the
+   #water-ripple SVG filter in each page
    ========================================= */
-nav {
+.water {
+  position: fixed;
+  inset: -60px; /* bleed past the edges so the ripple never shows a seam */
+  z-index: -1;
+  background-color: var(--color-water);
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 1.2px, transparent 2px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.85) 0 2px, transparent 3px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.6px),
+    /* diagonal light bands that flow toward the bottom-right corner;
+       each tile holds two bands so it repeats seamlessly */
+    linear-gradient(135deg, transparent 0 14%, rgba(255, 255, 255, 0.6) 25%, transparent 36% 64%, rgba(255, 255, 255, 0.6) 75%, transparent 86%),
+    linear-gradient(135deg, transparent 0 10%, rgba(255, 255, 255, 0.35) 25%, transparent 40% 60%, rgba(255, 255, 255, 0.35) 75%, transparent 90%),
+    /* bright source in the top-left corner */
+    radial-gradient(ellipse 55% 45% at 0% 0%, rgba(255, 255, 255, 0.9), transparent 70%),
+    radial-gradient(ellipse 40% 60% at 95% 30%, rgba(255, 255, 255, 0.5), transparent 70%),
+    linear-gradient(135deg, #eefaff 0%, #d2edfd 35%, #c6e7fb 70%, #bfe2f8 100%);
+  background-size:
+    97px 113px,
+    173px 151px,
+    61px 79px,
+    240px 240px,
+    420px 420px,
+    100% 100%, 100% 100%, 100% 100%;
+  filter: url(#water-ripple);
+  animation: water-flow 24s linear infinite;
+}
+
+/* every offset is a whole number of tiles, so the loop has no jump */
+@keyframes water-flow {
+  from {
+    background-position:
+      0 0,
+      40px 70px,
+      25px 15px,
+      0 0,
+      0 0,
+      0 0, 0 0, 0 0;
+  }
+  to {
+    background-position:
+      194px 226px,
+      213px 221px,
+      147px 173px,
+      480px 480px,
+      420px 420px,
+      0 0, 0 0, 0 0;
+  }
+}
+
+/* stars sit above the water but outside the ripple filter, so they stay crisp */
+.water-stars {
+  position: fixed;
+  inset: -60px;
+  z-index: -1;
+  pointer-events: none;
+  /* the blur sits on the layer (not each star) because clip-path would cut it off */
+  filter:
+    blur(1px)
+    drop-shadow(0 0 5px rgba(255, 248, 200, 1))
+    drop-shadow(0 0 12px rgba(255, 244, 180, 0.85));
+}
+
+/* small four-point glints that twinkle around the stars */
+.glint {
+  position: absolute;
+  aspect-ratio: 1;
+  clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+  background: #ffffff;
+  animation: twinkle 2.2s ease-in-out infinite;
+}
+
+.water-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* =========================================
+   CURSOR GLOW + WATER RIPPLES (water.js)
+   ========================================= */
+.cursor-glow {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 2.5rem;
-  background: rgba(15, 15, 15, 0.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-border);
+  z-index: 300;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(120, 195, 255, 0.55) 0%, rgba(180, 165, 255, 0.25) 40%, transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.1s;
 }
 
-.nav-logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  letter-spacing: 0.05em;
+.cursor-glow.is-visible {
+  opacity: 1;
+}
+
+.ripples {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 0 10px rgba(80, 165, 235, 0.6), inset 0 0 10px rgba(80, 165, 235, 0.45);
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple 3s cubic-bezier(0.2, 0.6, 0.35, 1) forwards;
+}
+
+@keyframes ripple {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.9;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   SIDEBAR
+   ========================================= */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  width: var(--sidebar-w);
+  padding: 3.75rem 1.7rem 2.3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none; /* let the water stars behind it be hovered */
+}
+
+.sidebar > * {
+  pointer-events: auto;
+}
+
+/* star cluster above the nav, links home */
+.sidebar-logo {
+  position: relative;
+  display: block;
+  width: 80px;
+  height: 66px;
+  margin-bottom: 1.9rem;
 }
 
 .nav-links {
   display: flex;
-  gap: 2.5rem;
+  flex-direction: column;
+  gap: 0.45rem;
 }
 
 .nav-links a {
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  transition: color 0.2s;
+  font-family: var(--font-nav);
+  font-size: 1rem;
+  text-decoration: none;
+  text-underline-offset: 5px;
+  transition: opacity 0.2s;
 }
 
 .nav-links a:hover {
-  color: var(--color-text);
+  opacity: 0.6;
+}
+
+.nav-links a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.btn-resume {
+  display: block;
+  width: 129px;
+  margin-top: auto;
+  margin-left: -5px;
+  padding: 0.35rem 0;
+  text-align: center;
+  font-family: var(--font-nav);
+  font-size: 1.2rem;
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.35);
+  transition: background 0.2s;
+}
+
+.btn-resume:hover {
+  background: rgba(255, 255, 255, 0.85);
 }
 
 /* =========================================
-   HERO
+   MAIN PAGE COLUMN
+   ========================================= */
+.page {
+  position: relative;
+  z-index: 1;
+  width: min(var(--page-w), 100vw - var(--sidebar-w));
+  min-height: 100vh;
+  margin-left: var(--sidebar-w);
+  padding: 6.2rem 5rem 5rem 4.9rem;
+  background: var(--color-page);
+  /* feathered shoreline: the sand fades out into a damp edge, then the water */
+  box-shadow:
+    0 0 14px 10px var(--color-page),
+    0 0 40px 22px rgba(255, 251, 243, 0.45);
+}
+
+.section-title {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-bottom: 1rem;
+}
+
+.page p + p {
+  margin-top: 1.75rem;
+}
+
+.page p a {
+  text-underline-offset: 3px;
+}
+
+/* =========================================
+   HOME / HERO
    ========================================= */
 .hero {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 2.5rem;
   position: relative;
-  overflow: hidden;
-}
-
-.hero-content {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  width: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding-top: 9.6rem;
   animation: fadeUp 0.9s ease both;
-}
-
-.hero-eyebrow {
-  font-size: 0.9rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  margin-bottom: 0.75rem;
 }
 
 .hero-name {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 8vw, 7rem);
-  line-height: 1.05;
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: 1.25rem;
+  font-size: 5rem;
+  font-weight: 560;
+  line-height: 1.1;
+}
+
+.hero-tagline,
+.hero-sub {
+  font-size: 2.1rem;
+  line-height: 1.25;
 }
 
 .hero-tagline {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  color: var(--color-muted);
-  margin-bottom: 2.5rem;
-  font-weight: 300;
+  margin-top: 0.3rem;
+  font-style: italic;
+  font-weight: 700;
 }
 
-/* Decorative background circle */
-.hero-decoration {
+.page .hero-sub {
+  margin-top: 0.15rem;
+  font-weight: 400;
+}
+
+.hero-stars {
   position: absolute;
-  top: -30%;
-  right: -20%;
-  width: 1000px;
-  height: 1000px;
-  border-radius: 60%;
-  background: radial-gradient(circle, rgba(201, 110, 186, 0.206) 0%, transparent 40%);
-  pointer-events: none;
+  top: 10.2rem;
+  left: 21rem;
+  width: 80px;
+  height: 60px;
 }
-
-.hero-decoration-2 {
-  position: absolute;
-  bottom: -40%;
-  left: -25%;
-  width: 1200px;
-  height: 1200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(201, 110, 186, 0.17) 0%, transparent 40%);
-  pointer-events: none;
-}
-
-
 
 /* =========================================
-   ABOUT
+   STARS
    ========================================= */
-.about {
-  padding: 8rem 0;
-  border-top: 1px solid var(--color-border);
+.star {
+  position: absolute;
+  width: 36px;
+  aspect-ratio: 1;
+  clip-path: polygon(50% 0%, 62% 34%, 98% 36%, 69% 58%, 80% 94%, 50% 72%, 20% 94%, 31% 58%, 2% 36%, 38% 34%);
+  background: var(--holo-blue);
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.8));
+  pointer-events: auto;
+  transform: rotate(var(--tilt));
+  transition: transform 0.9s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
-.about-grid {
+/* every star sits slightly tilted; an inline --tilt overrides these */
+.star                  { --tilt: -10deg; }
+.star:nth-child(3n+2)  { --tilt: 14deg; }
+.star:nth-child(3n)    { --tilt: -18deg; }
+
+/* full spin on hover */
+.star:hover {
+  transform: rotate(calc(var(--tilt) + 360deg)) scale(1.15);
+}
+
+.star--pink  { background: var(--holo-pink); }
+.star--teal  { background: var(--holo-teal); }
+.star--blue  { background: var(--holo-blue); }
+.star--sparkle {
+  background: linear-gradient(135deg, #fffef6 0%, #fff8d6 45%, #fff1b3 75%, #fffdf0 100%);
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+/* stagger the twinkles so they don't pulse together */
+.water-stars > :nth-child(2n)   { animation-delay: -0.8s; }
+.water-stars > :nth-child(3n)   { animation-delay: -1.6s; }
+.water-stars > :nth-child(5n)   { animation-delay: -2.3s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.75; scale: 0.9; }
+  50%      { opacity: 1;    scale: 1.12; }
+}
+
+/* =========================================
+   RIGHT DECORATION PANEL
+   ========================================= */
+.decor {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: calc(var(--sidebar-w) + var(--page-w));
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Tilted "photo" cards — drop an <img> inside to show a picture */
+.photo {
+  position: absolute;
+  width: 220px;
+  height: 300px;
+  background: #fbfbfb;
+  box-shadow: 0 6px 18px rgba(80, 100, 110, 0.12);
+  overflow: hidden;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* =========================================
+   ENTRIES (experience + projects)
+   ========================================= */
+.entry + .entry {
+  margin-top: 2.2rem;
+}
+
+.entry-date {
+  display: block;
+}
+
+.entry-title {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.65;
+}
+
+.page .entry-tags {
+  margin-top: 0.4rem;
+}
+
+.entry-tags span + span::before {
+  content: '  ';  
+}
+
+.entry-link {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+
+/* =========================================
+   EXPERIENCE CARDS
+   ========================================= */
+.xp-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: 7.75rem 1fr;
+  gap: 1.25rem;
+  padding: 1.6rem 1.75rem 1.75rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.45);
+  transition: box-shadow 0.1s ease-out, background 0.1s ease-out;
+}
+
+.xp-card + .xp-card {
+  margin-top: 1.5rem;
+}
+
+.xp-card:hover {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 0 1px var(--color-accent), 0 0 18px 2px rgba(56, 110, 230, 0.35);
+}
+
+.page .xp-date {
+  margin: 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.9;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.tags li {
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 6px;
+}
+
+/* =========================================
+   PROJECT DETAIL (chromatin.html)
+   ========================================= */
+.subsection {
+  margin-top: 2.2rem;
+}
+
+.subsection h2 {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.subsection ul {
+  list-style: disc;
+  padding-left: 1.1rem;
+  margin-top: 0.75rem;
+}
+
+.encoding-table {
+  margin: 1.25rem 0;
+  border-collapse: collapse;
+}
+
+.encoding-table caption {
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.encoding-table th,
+.encoding-table td {
+  text-align: left;
+  padding: 0.3rem 1.5rem 0.3rem 0;
+}
+
+.encoding-table th {
+  font-weight: 600;
+  border-bottom: 1px solid currentColor;
+}
+
+/* =========================================
+   SOCIAL LINKS (about page)
+   ========================================= */
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   margin-top: 1rem;
 }
 
-.about-text h2 {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1.5rem;
-  color: var(--color-text);
-}
-
-.about-text p {
-  color: var(--color-muted);
-  margin-bottom: 1rem;
-  max-width: 480px;
-}
-
-.skills-list h3 {
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 1.25rem;
-}
-
-.skills-list ul {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
-}
-
-.skills-list ul li {
-  font-size: 0.9rem;
-  color: var(--color-muted);
-  padding-left: 1rem;
-  position: relative;
-}
-
-.skills-list ul li::before {
-  content: '▸';
-  position: absolute;
-  left: 0;
-  color: var(--color-accent);
-}
-
-/* =========================================
-   PROJECTS
-   ========================================= */
-.projects {
-  padding: 8rem 0;
-  border-top: 1px solid var(--color-border);
-}
-
-.projects h2 {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
-  margin-bottom: 3rem;
-}
-
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.project-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: calc(var(--radius) * 1.5);
-  padding: 2rem;
-  transition: border-color 0.3s, transform 0.3s;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.project-card:hover {
-  border-color: var(--color-accent);
-  transform: translateY(-4px);
-}
-
-.project-number {
-  font-family: var(--font-display);
-  font-size: 3rem;
-  font-style: italic;
-  color: var(--color-border);
-  line-height: 1;
-}
-
-.project-card h3 {
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: var(--color-text);
-}
-
-.project-card p {
-  font-size: 0.9rem;
-  color: var(--color-muted);
-  flex: 1;
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.project-tags span {
-  font-size: 0.72rem;
-  padding: 0.25rem 0.65rem;
-  border-radius: 999px;
-  border: 1px solid var(--color-border);
-  color: var(--color-muted);
-  letter-spacing: 0.05em;
-}
-
-.project-link {
-  font-size: 0.85rem;
-  color: var(--color-accent);
-  font-weight: 500;
-  transition: letter-spacing 0.2s;
-}
-
-.project-link:hover {
-  letter-spacing: 0.05em;
-}
-
-/* =========================================
-   CONTACT
-   ========================================= */
-.contact {
-  padding: 8rem 0;
-  border-top: 1px solid var(--color-border);
-  text-align: center;
-}
-
-.contact h2 {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  margin-bottom: 1rem;
-}
-
-.contact p {
-  color: var(--color-muted);
-  max-width: 440px;
-  margin: 0 auto 2rem;
-}
-
-.social-links {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 2.5rem;
-}
-
 .social-links a {
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  transition: color 0.2s;
-}
-
-.social-links a:hover {
-  color: var(--color-accent);
-}
-
-/* =========================================
-   FOOTER
-   ========================================= */
-footer {
-  padding: 2rem;
-  text-align: center;
-  border-top: 1px solid var(--color-border);
-  font-size: 0.8rem;
-  color: var(--color-muted);
+  text-underline-offset: 3px;
 }
 
 /* =========================================
@@ -417,7 +571,7 @@ footer {
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -425,30 +579,110 @@ footer {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    animation: none;
+  }
+
+  .water {
+    filter: none;
+    animation: none;
+  }
+
+  .star {
+    transition: none;
+  }
+
+  .star--sparkle,
+  .glint {
+    animation: none;
+  }
+}
+
 /* =========================================
    RESPONSIVE
    ========================================= */
-@media (max-width: 768px) {
-  nav {
-    padding: 1rem 1.25rem;
+@media (max-width: 1100px) {
+  .decor {
+    display: none;
+  }
+
+  .page {
+    width: auto;
+    max-width: var(--page-w);
+  }
+}
+
+@media (max-width: 720px) {
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page {
+    flex: 1;
+  }
+
+  .sidebar-logo {
+    display: none;
+  }
+
+  .sidebar {
+    position: static;
+    width: auto;
+    padding: 1.25rem 1rem;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
   }
 
   .nav-links {
-    gap: 1.5rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.1rem;
+  }
+
+  .nav-links a,
+  .btn-resume {
+    font-size: 1.05rem;
+  }
+
+  .btn-resume {
+    width: auto;
+    margin-top: 0;
+    margin-left: 0;
+    padding: 0.2rem 1rem;
+  }
+
+  .xp-card {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    padding: 1.25rem;
+  }
+
+  .page {
+    margin-left: 0;
+    min-height: auto;
+    padding: 3rem 1rem 4rem;
   }
 
   .hero {
-    padding: 0 1.25rem;
+    padding-top: 3rem;
   }
 
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+  .hero-name {
+    font-size: 3.75rem;
   }
 
-  .about,
-  .projects,
-  .contact {
-    padding: 5rem 0;
+  .hero-tagline,
+  .hero-sub {
+    font-size: 1.5rem;
+  }
+
+  .hero-stars {
+    top: 0;
+    left: auto;
+    right: 0;
   }
 }

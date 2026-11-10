@@ -6,137 +6,63 @@
     <title>Cherry Ni — Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Gelasio:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
+    <script src="water.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- NAVIGATION -->
-    <nav>
-      <div class="nav-logo">CN</div>
+    <!-- WATER BACKGROUND -->
+    <div class="water" aria-hidden="true"></div>
+    <div class="water-stars" aria-hidden="true">
+      <span class="star star--sparkle" style="left: 70px; top: 380px; width: 46px;"></span>
+      <span class="star star--sparkle" style="left: 160px; top: 620px; width: 38px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 225px); top: 300px; width: 50px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 120px); top: 370px; width: 40px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 420px); top: 395px; width: 58px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 130px); top: 600px; width: 42px;"></span>
+      <span class="glint" style="left: 125px; top: 365px; width: 16px;"></span>
+      <span class="glint" style="left: 45px; top: 560px; width: 12px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 290px); top: 285px; width: 18px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 95px); top: 440px; width: 12px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 395px); top: 470px; width: 16px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 190px); top: 650px; width: 14px;"></span>
+    </div>
+    <svg class="water-defs" aria-hidden="true" focusable="false">
+      <filter id="water-ripple" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.014" numOctaves="2" seed="7" result="noise">
+          <animate attributeName="baseFrequency" dur="14s" values="0.006 0.014;0.009 0.021;0.006 0.014" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="70" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" aria-label="Main">
+      <a href="index.html" class="sidebar-logo" aria-label="Cherry Ni, home">
+        <span class="star star--teal" style="left: 20px; top: 0; width: 30px;"></span>
+        <span class="star star--pink" style="left: 0; top: 26px; width: 40px;"></span>
+        <span class="star star--blue" style="left: 45px; top: 21px; width: 34px;"></span>
+      </a>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="experience.html">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="index.html" aria-current="page">home</a></li>
+        <li><a href="experience.html">experience</a></li>
+        <li><a href="projects.html">projects</a></li>
+        <li><a href="about.html">about</a></li>
       </ul>
+      <a href="Cherry_Ni_Resume.pdf" class="btn-resume" target="_blank">resume</a>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-      <div class="hero-content">
-        <p class="hero-eyebrow">Hello, I'm</p>
+    <!-- HERO -->
+    <main id="main" class="page">
+      <section class="hero">
         <h1 class="hero-name">Cherry Ni</h1>
-        <p class="hero-tagline">Designer &amp; Developer based in Los Angeles</p>
-        <a href="#projects" class="btn">View My Work</a>
-      </div>
-      <div class="hero-decoration" aria-hidden="true"></div>
-      <div class="hero-decoration-2" aria-hidden="true"></div>
-      
-
-    </section>
-
-    <!-- ABOUT SECTION -->
-    <section class="about" id="about">
-      <div class="container">
-        <span class="section-label">About Me</span>
-        <div class="about-grid">
-         <div class="about-text">
-          <h2>I build things for the web.</h2>
-          <p>
-            I'm a Computer Science student at UCLA with a focus on web development and user-centered design.
-          </p>
-          <p>
-            I love turning ideas into clean, functional interfaces. Currently looking for opportunities to grow as a developer.
-          </p>
+        <p class="hero-tagline">Product Engineer and Designer</p>
+        <p class="hero-sub">studying CS @ UCLA</p>
+        <div class="hero-stars" aria-hidden="true">
         </div>
-          <div class="skills-list">
-            <h3>Skills</h3>
-            <ul>
-              <li>HTML &amp; CSS</li>
-              <li>JavaScript</li>
-              <li>React</li>
-              <li>Node.js</li>
-              <li>Figma</li>
-              <li>Git &amp; GitHub</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS SECTION -->
-    <section class="projects" id="projects">
-      <div class="container">
-        <span class="section-label">Work</span>
-        <h2>Featured Projects</h2>
-       <div class="projects-grid">
-        
-        <div class="project-card">
-          <div class="project-number">01</div>
-          <h3>Locked In</h3>
-          <p>Designed a distraction-blocking app interface in Figma and built it out with React, Tailwind CSS, and Radix UI components for a clean, accessible interaction design.</p>
-          <div class="project-tags">
-            <span>React</span>
-            <span>Tailwind CSS</span>
-            <span>Figma</span>
-          </div>
-          <a href="https://github.com/cherrynii/distraction-blocking-app" class="project-link">View Project →</a>
-        </div>
-        
-        
-        <div class="project-card">
-          <div class="project-number">02</div>
-          <h3>City Skies</h3>
-          <p>A responsive weather application that displays current conditions and forecasts for any city.</p>
-          <div class="project-tags">
-            <span>HTML</span>
-            <span>JavaScript</span>
-          </div>
-          <a href="weather.html" class="project-link">View Project →</a>
-        </div>
-        
-        <div class="project-card">
-          <div class="project-number">03</div>
-          <h3>Chromatin State Prediction</h3>
-          <p>Designed and trained a 1D convolutional neural network to classify 200bp DNA sequences into chromatin states.</p>
-          <div class="project-tags">
-            <span>Python</span>
-            <span>One-hot Encoding</span>
-          </div>
-          <a href="chromatin.html" target="_blank" class="project-link">View Project →</a>
-        </div>
-        
-        
-
-</div>
-      </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section class="contact" id="contact">
-      <div class="container">
-        <span class="section-label">Contact</span>
-        <h2>Let's work together.</h2>
-        <p>Whether you have a project in mind or just want to say hi — my inbox is always open.</p>
-        <a href="mailto:cherryni@g.ucla.edu" class="btn btn-outline">Say Hello</a>
-        <div class="social-links">
-          <a href="https://github.com/cherrynii" target="_blank">GitHub</a>
-          <a href="https://www.linkedin.com/in/cherry-ni-07588b32b/" target="_blank">LinkedIn</a>
-          <a href="https://www.instagram.com/cherryini/" target="_blank">Instagram</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-      <p>Designed &amp; Built by <strong>Cherry Ni</strong> · <span id="year"></span></p>
-    </footer>
-
-    <script>
-      // Auto-update the year in the footer
-      document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
-
+      </section>
+    </main>
   </body>
 </html>

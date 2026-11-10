@@ -1,174 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Chromatin State Prediction — Cherry Ni</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css" />
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chromatin State Prediction — Cherry Ni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Gelasio:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="water.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-<body>
-<!-- NAVIGATION -->
-<nav>
-<div class="nav-logo"><a href="index.html" style="color:inherit;text-decoration:none;">CN</a></div>
-<ul class="nav-links">
-<li><a href="index.html#about">About</a></li>
-<li><a href="experience.html">Experience</a></li>
-<li><a href="index.html#projects">Projects</a></li>
-<li><a href="index.html#contact">Contact</a></li>
-</ul>
-</nav>
+    <!-- WATER BACKGROUND -->
+    <div class="water" aria-hidden="true"></div>
+    <div class="water-stars" aria-hidden="true">
+      <span class="star star--sparkle" style="left: 70px; top: 380px; width: 46px;"></span>
+      <span class="star star--sparkle" style="left: 160px; top: 620px; width: 38px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 225px); top: 300px; width: 50px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 120px); top: 370px; width: 40px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 420px); top: 395px; width: 58px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 130px); top: 600px; width: 42px;"></span>
+      <span class="glint" style="left: 125px; top: 365px; width: 16px;"></span>
+      <span class="glint" style="left: 45px; top: 560px; width: 12px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 290px); top: 285px; width: 18px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 95px); top: 440px; width: 12px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 395px); top: 470px; width: 16px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 190px); top: 650px; width: 14px;"></span>
+    </div>
+    <svg class="water-defs" aria-hidden="true" focusable="false">
+      <filter id="water-ripple" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.014" numOctaves="2" seed="7" result="noise">
+          <animate attributeName="baseFrequency" dur="14s" values="0.006 0.014;0.009 0.021;0.006 0.014" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="70" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
 
-<!-- PROJECT HERO -->
-<section class="hero">
-<div class="hero-content">
-<p class="hero-eyebrow">Project 03</p>
-<h1 class="hero-name">Chromatin State Prediction</h1>
-<p class="hero-tagline">A 1D convolutional neural network for classifying DNA sequences into chromatin states</p>
-</div>
-<div class="hero-decoration" aria-hidden="true"></div>
-</section>
+    <!-- SIDEBAR -->
+    <nav class="sidebar" aria-label="Main">
+      <a href="index.html" class="sidebar-logo" aria-label="Cherry Ni, home">
+        <span class="star star--teal" style="left: 20px; top: 0; width: 30px;"></span>
+        <span class="star star--pink" style="left: 0; top: 26px; width: 40px;"></span>
+        <span class="star star--blue" style="left: 45px; top: 21px; width: 34px;"></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">home</a></li>
+        <li><a href="experience.html">experience</a></li>
+        <li><a href="projects.html" aria-current="page">projects</a></li>
+        <li><a href="about.html">about</a></li>
+      </ul>
+      <a href="resume.pdf" class="btn-resume" target="_blank">resume</a>
+    </nav>
 
-<!-- OVERVIEW -->
-<section class="about" id="overview">
-<div class="container">
-<span class="section-label">Overview</span>
-<div class="about-grid">
-<div class="about-text">
-<h2>Why a CNN?</h2>
-<p>
-DNA regulation depends heavily on sequence motifs — short, recurring patterns that
-influence how a region of the genome behaves. CNNs are a natural fit for this: they
-detect motifs automatically regardless of where they fall in a sequence, and reuse
-the same learned filters across the entire input.
-</p>
-<p>
-For this hackathon project, I trained a 1D CNN to classify 200bp DNA sequences into
-their corresponding chromatin states.
-</p>
-</div>
-<div class="skills-list">
-<h3>Built With</h3>
-<ul>
-<li>Python</li>
-<li>TensorFlow / Keras</li>
-<li>One-hot Encoding</li>
-<li>Convolutional Neural Networks</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
+    <!-- PROJECT -->
+    <main id="main" class="page">
+      <h1 class="section-title">Chromatin State Prediction.</h1>
+      <p>A 1D convolutional neural network for classifying DNA sequences into chromatin states.</p>
+      <p class="entry-tags">Tags: <span>Python</span> <span>TensorFlow / Keras</span> <span>One-hot Encoding</span> <span>CNNs</span></p>
 
-<!-- DATA REPRESENTATION -->
-<section class="projects" id="data">
-<div class="container">
-<span class="section-label">Data</span>
-<h2>Data Representation</h2>
-<p>
-Each DNA sequence was one-hot encoded, mapping every nucleotide to a 4-channel vector
-so the model could process the sequence numerically.
-</p>
-<table style="margin: 1.5rem 0; border-collapse: collapse; width: 100%; max-width: 320px;">
-<caption style="text-align:left; margin-bottom: 0.5rem; font-weight: 500;">One-hot encoding scheme</caption>
-<thead>
-<tr>
-<th scope="col" style="text-align:left; padding: 0.4rem 1rem; border-bottom: 1px solid currentColor;">Base</th>
-<th scope="col" style="text-align:left; padding: 0.4rem 1rem; border-bottom: 1px solid currentColor;">Encoding</th>
-</tr>
-</thead>
-<tbody>
-<tr><td style="padding: 0.4rem 1rem;">A</td><td style="padding: 0.4rem 1rem;">[1, 0, 0, 0]</td></tr>
-<tr><td style="padding: 0.4rem 1rem;">C</td><td style="padding: 0.4rem 1rem;">[0, 1, 0, 0]</td></tr>
-<tr><td style="padding: 0.4rem 1rem;">G</td><td style="padding: 0.4rem 1rem;">[0, 0, 1, 0]</td></tr>
-<tr><td style="padding: 0.4rem 1rem;">T</td><td style="padding: 0.4rem 1rem;">[0, 0, 0, 1]</td></tr>
-</tbody>
-</table>
-<p>The dataset was split 80/20 — 80% for training, 20% for validation.</p>
-</div>
-</section>
+      <section class="subsection">
+        <h2>Why a CNN?</h2>
+        <p>
+          DNA regulation depends heavily on sequence motifs — short, recurring patterns that
+          influence how a region of the genome behaves. CNNs are a natural fit for this: they
+          detect motifs automatically regardless of where they fall in a sequence, and reuse
+          the same learned filters across the entire input.
+        </p>
+        <p>
+          For this hackathon project, I trained a 1D CNN to classify 200bp DNA sequences into
+          their corresponding chromatin states.
+        </p>
+      </section>
 
-<!-- MODEL ARCHITECTURE -->
-<section class="about" id="architecture">
-<div class="container">
-<span class="section-label">Architecture</span>
-<div class="about-grid">
-<div class="about-text">
-<h2>Model Architecture</h2>
-<p>
-The network used 4 convolutional layers with kernel sizes of 30, 15, 7, and 3.
-Large early kernels capture broader motifs, while smaller kernels pick up more
-specific patterns as the network goes deeper. Filter counts increased from 64 to 512
-across the layers.
-</p>
-</div>
-<div class="skills-list">
-<h3>Key Techniques</h3>
-<ul>
-<li>Dilated convolutions for long-range dependencies</li>
-<li>Global average pooling to reduce overfitting</li>
-<li>Label smoothing for noisy labels</li>
-<li>AdamW optimizer + dropout</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
+      <section class="subsection">
+        <h2>Data Representation</h2>
+        <p>
+          Each DNA sequence was one-hot encoded, mapping every nucleotide to a 4-channel vector
+          so the model could process the sequence numerically.
+        </p>
+        <table class="encoding-table">
+          <caption>One-hot encoding scheme</caption>
+          <thead>
+            <tr><th scope="col">Base</th><th scope="col">Encoding</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>A</td><td>[1, 0, 0, 0]</td></tr>
+            <tr><td>C</td><td>[0, 1, 0, 0]</td></tr>
+            <tr><td>G</td><td>[0, 0, 1, 0]</td></tr>
+            <tr><td>T</td><td>[0, 0, 0, 1]</td></tr>
+          </tbody>
+        </table>
+        <p>The dataset was split 80/20 — 80% for training, 20% for validation.</p>
+      </section>
 
-<!-- AUGMENTATION -->
-<section class="projects" id="augmentation">
-<div class="container">
-<span class="section-label">Augmentation</span>
-<h2>Reverse Complement Augmentation</h2>
-<p>
-DNA is double-stranded, and motifs can appear on either strand. To account for this,
-I trained the model on each sequence alongside its reverse complement — effectively
-doubling the dataset size and improving generalization.
-</p>
-</div>
-</section>
+      <section class="subsection">
+        <h2>Model Architecture</h2>
+        <p>
+          The network used 4 convolutional layers with kernel sizes of 30, 15, 7, and 3.
+          Large early kernels capture broader motifs, while smaller kernels pick up more
+          specific patterns as the network goes deeper. Filter counts increased from 64 to 512
+          across the layers.
+        </p>
+        <ul>
+          <li>Dilated convolutions for long-range dependencies</li>
+          <li>Global average pooling to reduce overfitting</li>
+          <li>Label smoothing for noisy labels</li>
+          <li>AdamW optimizer + dropout</li>
+        </ul>
+      </section>
 
-<!-- RESULTS -->
-<section class="about" id="results">
-<div class="container">
-<span class="section-label">Results</span>
-<div class="about-text">
-<h2>Results &amp; Takeaways</h2>
-<p>
-The model reached a top validation accuracy of 19.5% on this multi-class chromatin
-state classification task — a solid baseline for a hackathon timeframe, and a clear
-signal for where the next iteration should focus: more training data, deeper motif
-architectures, and further tuning of the augmentation strategy.
-</p>
-</div>
-</div>
-</section>
+      <section class="subsection">
+        <h2>Reverse Complement Augmentation</h2>
+        <p>
+          DNA is double-stranded, and motifs can appear on either strand. To account for this,
+          I trained the model on each sequence alongside its reverse complement — effectively
+          doubling the dataset size and improving generalization.
+        </p>
+      </section>
 
-<!-- CONTACT / BACK -->
-<section class="contact" id="contact">
-<div class="container">
-<span class="section-label">Contact</span>
-<h2>Let's work together.</h2>
-<p>Whether you have a project in mind or just want to say hi — my inbox is always open.</p>
-<a href="mailto:cherryni@g.ucla.edu" class="btn btn-outline">Say Hello</a>
-<div class="social-links">
-<a href="https://github.com/cherrynii" target="_blank">GitHub</a>
-<a href="https://www.linkedin.com/in/cherry-ni-07588b32b/" target="_blank">LinkedIn</a>
-<a href="https://www.instagram.com/cherryini/" target="_blank">Instagram</a>
-</div>
-</div>
-</section>
+      <section class="subsection">
+        <h2>Results &amp; Takeaways</h2>
+        <p>
+          The model reached a top validation accuracy of 19.5% on this multi-class chromatin
+          state classification task — a solid baseline for a hackathon timeframe, and a clear
+          signal for where the next iteration should focus: more training data, deeper motif
+          architectures, and further tuning of the augmentation strategy.
+        </p>
+      </section>
+    </main>
 
-<!-- FOOTER -->
-<footer>
-<p>Designed &amp; Built by <strong>Cherry Ni</strong> · <span id="year"></span></p>
-</footer>
-
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-</body>
+    <!-- DECORATION -->
+    <div class="decor" aria-hidden="true">
+      <span class="star star--teal" style="left: 140px; top: 128px; width: 56px; --tilt: -8deg;"></span>
+      <span class="star star--pink" style="left: 110px; top: 208px; width: 66px; --tilt: -12deg;"></span>
+      <span class="star star--blue" style="left: 187px; top: 197px; width: 62px; --tilt: 10deg;"></span>
+    </div>
+  </body>
 </html>

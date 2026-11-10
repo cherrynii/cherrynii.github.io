@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Cherry Ni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Gelasio:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="water.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- WATER BACKGROUND -->
+    <div class="water" aria-hidden="true"></div>
+    <div class="water-stars" aria-hidden="true">
+      <span class="star star--sparkle" style="left: 70px; top: 380px; width: 46px;"></span>
+      <span class="star star--sparkle" style="left: 160px; top: 620px; width: 38px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 225px); top: 300px; width: 50px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 120px); top: 370px; width: 40px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 420px); top: 395px; width: 58px;"></span>
+      <span class="star star--sparkle" style="left: calc(var(--right) + 130px); top: 600px; width: 42px;"></span>
+      <span class="glint" style="left: 125px; top: 365px; width: 16px;"></span>
+      <span class="glint" style="left: 45px; top: 560px; width: 12px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 290px); top: 285px; width: 18px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 95px); top: 440px; width: 12px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 395px); top: 470px; width: 16px;"></span>
+      <span class="glint" style="left: calc(var(--right) + 190px); top: 650px; width: 14px;"></span>
+    </div>
+    <svg class="water-defs" aria-hidden="true" focusable="false">
+      <filter id="water-ripple" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.014" numOctaves="2" seed="7" result="noise">
+          <animate attributeName="baseFrequency" dur="14s" values="0.006 0.014;0.009 0.021;0.006 0.014" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="70" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" aria-label="Main">
+      <a href="index.html" class="sidebar-logo" aria-label="Cherry Ni, home">
+        <span class="star star--teal" style="left: 20px; top: 0; width: 30px;"></span>
+        <span class="star star--pink" style="left: 0; top: 26px; width: 40px;"></span>
+        <span class="star star--blue" style="left: 45px; top: 21px; width: 34px;"></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">home</a></li>
+        <li><a href="experience.html">experience</a></li>
+        <li><a href="projects.html" aria-current="page">projects</a></li>
+        <li><a href="about.html">about</a></li>
+      </ul>
+      <a href="resume.pdf" class="btn-resume" target="_blank">resume</a>
+    </nav>
+
+    <!-- PROJECTS -->
+    <main id="main" class="page">
+      <h1 class="section-title">Projects.</h1>
+
+      <article class="entry">
+        <h2 class="entry-title">Locked In</h2>
+        <p>
+          Designed a distraction-blocking app interface in Figma and built it out with React,
+          Tailwind CSS, and Radix UI components for a clean, accessible interaction design.
+        </p>
+        <ul class="tags" aria-label="Tags">
+          <li>React</li>
+          <li>Figma</li>
+          <li>Git</li>
+        </ul>
+        <a href="https://github.com/cherrynii/distraction-blocking-app" target="_blank" class="entry-link">View project →</a>
+      </article>
+
+      <article class="entry">
+        <h2 class="entry-title">City Skies</h2>
+        <p>
+          A responsive weather application that displays current conditions and forecasts for
+          any city.
+        </p>
+        <ul class="tags" aria-label="Tags">
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+        </ul>
+        <a href="weather.html" class="entry-link">View project →</a>
+      </article>
+
+      <article class="entry">
+        <h2 class="entry-title">Chromatin State Prediction</h2>
+        <p>
+          Designed and trained a 1D convolutional neural network to classify 200bp DNA sequences
+          into chromatin states.
+        </p>
+
+        <ul class="tags" aria-label="Tags">
+          <li>Python</li>
+          <li>TensorFlow</li>
+          <li>Keras</li>
+        </ul>
+        <a href="chromatin.html" class="entry-link">View project →</a>
+      </article>
+    </main>
+
+    <!-- DECORATION -->
+    <div class="decor" aria-hidden="true">
+      <figure class="photo" style="left: 120px; top: 150px; width: 230px; height: 310px; transform: rotate(-5deg);">
+        <!-- <img src="images/projects.jpg" alt="" /> -->
+      </figure>
+      <span class="star star--pink" style="left: 95px; top: 125px; width: 54px; --tilt: -10deg;"></span>
+      <span class="star star--teal" style="left: 320px; top: 420px; width: 48px;"></span>
+      <span class="star star--blue" style="left: 352px; top: 462px; width: 52px; --tilt: 8deg;"></span>
+    </div>
+  </body>
+</html>
